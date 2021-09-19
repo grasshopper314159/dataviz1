@@ -1,15 +1,15 @@
 {
     "$schema": "https://vega.github.io/schema/vega/v5.json",
     "description": "Area charts of stock prices, with an interactive overview and filtered detail views.",
-    "width": 720,
+    "width": 920,
     "height": 480,
     "padding": 5,
 
     "data": [
         {
-            "name": "CPI_Data",
-            "url": "data/CPIAUCSL.csv",
-            "format": {"type": "csv", "parse": {"CPI": "number", "date": "date"}}
+            "name": "Pop_Data",
+            "url": "data/Pop_Data.csv",
+            "format": {"type": "csv", "parse": {"Population": "number", "Growth": "number"}}
         }
     ],
 
@@ -26,27 +26,27 @@
             "encode": {
                 "enter": {
                     "height": {"value": 390},
-                    "width": {"value": 720}
+                    "width": {"value": 920}
                 }
             },
             "scales": [
                 {
                     "name": "xDetail",
-                    "type": "time",
-                    "range": "width",
-                    "domain": {"data": "CPI_Data", "field": "date"},
+                    "type": "linear",
+                    "range": [0, 920],
+                    "domain": {"data": "Pop_Data", "field": "Population"},
                     "domainRaw": {"signal": "detailDomain"}
                 },
                 {
                     "name": "yDetail",
                     "type": "linear",
                     "range": [390, 0],
-                    "domain": {"data": "CPI_Data", "field": "CPI"},
+                    "domain": {"data": "Pop_Data", "field": "Growth"},
                     "nice": true, "zero": true
                 }
             ],
             "axes": [
-                {"orient": "bottom", "scale": "xDetail","title": "Time"},
+                {"orient": "bottom", "scale": "xDetail","title": "Population"},
                 {"orient": "left", "scale": "yDetail","title": "Consumer Price Index"}
             ],
             "marks": [
@@ -62,13 +62,13 @@
                     "marks": [
                         {
                             "type": "line",
-                            "from": {"data": "CPI_Data"},
+                            "from": {"data": "Pop_Data"},
                             "encode": {
                                 "update": {
-                                    "x": {"scale": "xDetail", "field": "date"},
-                                    "y": {"scale": "yDetail", "field": "CPI"},
+                                    "x": {"scale": "xDetail", "field": "Population"},
+                                    "y": {"scale": "yDetail", "field": "Growth"},
                                     "y2": {"scale": "yDetail", "value": 0},
-                                    "fill": {"value": "orange"}
+                                    "fill": {"value": "red"}
                                 }
                             }
                         }
@@ -140,13 +140,13 @@
                     "name": "xOverview",
                     "type": "time",
                     "range": "width",
-                    "domain": {"data": "CPI_Data", "field": "date"}
+                    "domain": {"data": "Pop_Data", "field": "Population"}
                 },
                 {
                     "name": "yOverview",
                     "type": "linear",
                     "range": [70, 0],
-                    "domain": {"data": "CPI_Data", "field": "CPI"},
+                    "domain": {"data": "Pop_Data", "field": "Growth"},
                     "nice": true, "zero": true
                 }
             ],
@@ -157,11 +157,11 @@
                 {
                     "type": "line",
                     "interactive": false,
-                    "from": {"data": "CPI_Data"},
+                    "from": {"data": "Pop_Data"},
                     "encode": {
                         "update": {
-                            "x": {"scale": "xOverview", "field": "date"},
-                            "y": {"scale": "yOverview", "field": "CPI"},
+                            "x": {"scale": "xOverview", "field": "Population"},
+                            "y": {"scale": "yOverview", "field": "Growth"},
                             "y2": {"scale": "yOverview", "value": 0}
                         }
                     }

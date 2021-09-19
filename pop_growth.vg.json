@@ -1,0 +1,16 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A scatter plot showing horsepower and miles per gallons for various cars.",
+  "data": [
+    {
+      "name": "Pop_Data",
+      "url": "data/Pop_Data.csv",
+      "format": {"type": "csv", "parse": {"Population": "number", "Growth": "number"}}
+    }
+  ],
+  "mark": "point",
+  "encoding": {
+    "x": {"field": "Population", "type": "quantitative"},
+    "y": {"field": "Growth", "type": "quantitative"}
+  }
+}
